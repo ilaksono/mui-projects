@@ -58,7 +58,8 @@ export default function UserProfile() {
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: true
+                      disabled: true,
+                      value:'Ian Laksono'
                     }}
                   />
                 </GridItem>
@@ -69,6 +70,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                      value: 'ilaksono'
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -77,6 +81,9 @@ export default function UserProfile() {
                     id="email-address"
                     formControlProps={{
                       fullWidth: true
+                    }}
+                    inputProps={{
+                      value: 'ian.laksono@gmail.com'
                     }}
                   />
                 </GridItem>
@@ -89,6 +96,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                      value: 'Ian'
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
@@ -97,6 +107,9 @@ export default function UserProfile() {
                     id="last-name"
                     formControlProps={{
                       fullWidth: true
+                    }}
+                    inputProps={{
+                      value: 'Laksono'
                     }}
                   />
                 </GridItem>
@@ -109,6 +122,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                      value: 'Toronto'
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -118,6 +134,9 @@ export default function UserProfile() {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                      value: 'CA'
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
@@ -126,6 +145,9 @@ export default function UserProfile() {
                     id="postal-code"
                     formControlProps={{
                       fullWidth: true
+                    }}
+                    inputProps={{
+                      value: 'L4K 5O9'
                     }}
                   />
                 </GridItem>
@@ -141,7 +163,8 @@ export default function UserProfile() {
                     }}
                     inputProps={{
                       multiline: true,
-                      rows: 5
+                      rows: 5,
+                      value: "In a nutshell, two birds created a chicken egg, and hence: the egg came first, and then it hatched a chicken."
                     }}
                   />
                 </GridItem>
