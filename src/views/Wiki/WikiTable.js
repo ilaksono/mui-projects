@@ -10,26 +10,13 @@ import TableCell from "@material-ui/core/TableCell";
 // core components
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
 
-const formatDate = date => {
-  if (date === 'Offline')
-    return 'Offline';
-  const d = new Date(date);
-  let am = true;
-  let h = d.getHours();
-  h -= 5;
-  if (h <= 0) h += 24;
-  if (h > 11) {
-    am = false;
-    if (h === 24)
-      am = true;
-    if (h !== 12)
-      h -= 12;
-  }
-  const m = d.getMinutes();
-  return `${h}:${m < 10 ? '0' : ''}${m} ${am ? 'am' : 'pm'} EST`;
-};
 const useStyles = makeStyles(styles);
-
+function ToText(node) {
+  let tag = document.createElement("div");
+  tag.innerHTML = node;
+  node = tag.innerText;
+  return node;
+}
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor } = props;
@@ -56,13 +43,13 @@ export default function CustomTable(props) {
           {tableData.map((prop, key) => {
             return (
               <TableRow key={key} className={classes.tableBodyRow}
-                onClick={() => window.open(`https://www.twitch.tv/${prop[0].toLowerCase()}`, '_blank', '')}
+                onClick={() => window.open(`https://en.wikipedia.org/?curid=${prop[1]}`, '_blank', '')}
                 style={{ cursor: 'pointer' }}
               >
                 {prop.map((prop, key) => {
                   return (
                     <TableCell className={classes.tableCell} key={key}>
-                      {key !== 3 ? prop : formatDate(prop)}
+                      {key !== 3 ? prop : ToText(prop)}
                     </TableCell>
                   );
                 })}

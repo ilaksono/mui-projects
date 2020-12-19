@@ -36,7 +36,7 @@ export default function FixedPlugin(props) {
           onAnimationEnd={() => setAnim(false)}
         >
           <i className={`fa fa-cog fa-2x${anim
-            ? (props.fixedClasses === 'dropdown show'
+            ? (props.fixedClasses !== 'dropdown show'
               ? ' rotate' : ' rotate-left') : ''}`}
           />
         </div>

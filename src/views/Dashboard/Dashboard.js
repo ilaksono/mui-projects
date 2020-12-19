@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -7,6 +7,8 @@ import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
+import AcUnitIcon from '@material-ui/icons/AcUnit';
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import Update from "@material-ui/icons/Update";
@@ -28,20 +30,31 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
+import axios from 'axios'
 import { bugs, website, server } from "variables/general.js";
-
+import useApplicationData1 from 'hooks/useApplicationData1';
 import {
   dailySalesChart,
   emailsSubscriptionChart,
   completedTasksChart
 } from "variables/charts.js";
-
+import WbSunnyOutlinedIcon from '@material-ui/icons/WbSunnyOutlined';
+import CloudOutlinedIcon from '@material-ui/icons/CloudOutlined';
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+
+  const {
+    weather,
+    convertTemp,
+    icon,
+    cels
+  } = useApplicationData1();
+  const handleClick = () => {
+    convertTemp();
+  };
   const classes = useStyles();
   return (
     <div>
@@ -50,21 +63,21 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
-                <Icon>content_copy</Icon>
+                <WbSunnyOutlinedIcon/>
               </CardIcon>
-              <p className={classes.cardCategory}>Used Space</p>
+              <p className={classes.cardCategory}>Temperature</p>
               <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
+    {weather.tempK} <small>{cels ? 'C' : 'F'}</small>
               </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
                 <Danger>
-                  <Warning />
+                  {cels ? <AcUnitIcon /> : <WbSunnyIcon/>}
                 </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
+                <div onClick={handleClick} style={{ cursor: 'pointer'}}>
+                  Convert To {cels ? 'Fahrenheit': 'Celsius'}
+                </div>
               </div>
             </CardFooter>
           </Card>
@@ -73,15 +86,19 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-                <Store />
+                <div className='animate' style={{ alignSelf: 'center', fontSize: '24px' }}>
+                  {/* <i className={icon}></i> */}
+                  <CloudOutlinedIcon/>
+                </div>
               </CardIcon>
-              <p className={classes.cardCategory}>Revenue</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <p className={classes.cardCategory}>Weather</p>
+    <h3 className={classes.cardTitle}>{weather.main}</h3>
             </CardHeader>
+              
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-                Last 24 Hours
+    {weather.city}, {weather.country}
               </div>
             </CardFooter>
           </Card>

@@ -34,8 +34,7 @@ import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
-import RTLPage from "views/RTLPage/RTLPage.js";
-
+import Wiki from 'views/Wiki';
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -94,17 +93,16 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
+    path: "/wiki",
+    name: "Wikipedia Viewer",
+    rtlName: '',
     icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
+    component: Wiki,
+    layout: "/admin"
   },
   {
     path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
-    rtlName: "التطور للاحترافية",
+    name: "h",
     icon: Unarchive,
     component: UpgradeToPro,
     layout: "/admin"
