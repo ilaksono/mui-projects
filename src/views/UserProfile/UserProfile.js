@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -38,6 +38,7 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const [hover, setHover] = useState(false);
   return (
     <div>
       <GridContainer>
@@ -156,8 +157,11 @@ export default function UserProfile() {
             <CardAvatar profile>
               <a href="#pablo" onClick={e => e.preventDefault()}>
                 <img src={avatar} alt="..." style={{
-                  filter: 'grayscale(80%)',
-                }}/>
+                  filter: hover ? 'none':'grayscale(80%)',
+                }}
+                onMouseOver={() => setHover(true)}
+                onMouseOut={() => setHover(false)}
+                />
               </a>
             </CardAvatar>
             <CardBody profile>

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
@@ -18,7 +18,10 @@ export default function FixedPlugin(props) {
   const [bgImage, setBgImage] = React.useState(props.bgImage);
   const handleClick = () => {
     props.handleFixedClick();
+    setAnim(true);
   };
+  const [anim, setAnim] = useState(false);
+
   return (
     <div
       className={classnames("fixed-plugin", {
@@ -26,8 +29,16 @@ export default function FixedPlugin(props) {
       })}
     >
       <div id="fixedPluginClasses" className={props.fixedClasses}>
-        <div onClick={handleClick}>
-          <i className="fa fa-cog fa-2x" />
+        <div onClick={handleClick}
+          style={{
+            cursor: 'pointer'
+          }}
+          onAnimationEnd={() => setAnim(false)}
+        >
+          <i className={`fa fa-cog fa-2x${anim
+            ? (props.fixedClasses === 'dropdown show'
+              ? ' rotate' : ' rotate-left') : ''}`}
+          />
         </div>
         <ul className="dropdown-menu">
           <li className="header-title">SIDEBAR FILTERS</li>
