@@ -65,7 +65,8 @@ const initS = {
   piece: '',
   board: Array(9).fill(''),
   phase: '',
-  next: 'X'
+  next: 'X',
+  msg: ''
 };
 const wins = [
   [0, 1, 2],
@@ -117,12 +118,18 @@ const reducer = (state, action) => {
         next
       };
     }
+    case 'LOSS': {
+      return {...initS, msg:'You Lost!'}
+    }
     case 'MOVE': {
 
       return { ...state, board: action.cpy, next: action.next };
     }
     case 'WIN': {
-      return initS;
+      return {...initS, msg:'You Won!'};
+    }
+    case 'TIE': {
+      return {...initS, msg:'It\'s a Tie!'}
     }
     default:
       throw new Error('invalid type');
@@ -131,7 +138,7 @@ const reducer = (state, action) => {
 
 const checkWin = (arr, piece) => {
   if (!arr.some((val) => val === ''))
-    return true;
+    return null;
   return wins.some((win) => {
     return win.every((node) =>
       arr[node] === piece);
@@ -154,9 +161,10 @@ export default function TTT() {
       const next = game.next;
       const ai = makeAIMove(id);
       cpy[ai] = game.piece === 'X' ? 'O' : 'X';
-      if (checkWin(cpy, game.next, ai))
-        return dispatch({ type: 'WIN', });
-
+      if (checkWin(cpy, game.piece === 'X' ? 'O' : 'X'))
+        return dispatch({ type: 'LOSS', });
+      if (checkWin(cpy, game.piece === 'X' ? 'O' : 'X') === null || checkWin(cpy, game.piece) === null)
+        return dispatch({type:'TIE'})
       // const next = game.next === 'X' ? 'O' : 'X';
       dispatch({ type: 'MOVE', next, cpy });
 
@@ -187,6 +195,7 @@ export default function TTT() {
           !game.piece ?
             <StartChoose
               handleStart={handleStart}
+              msg={game.msg}
             />
             :
             <>
