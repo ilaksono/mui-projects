@@ -91,6 +91,7 @@ const Board = (props) => {
         id={3 * i + j}
         className={classes.cell}
         onClick={(event) => props.handleClick(event.target.id)}
+        key={3*i + j}
       >{props.game.board[3 * i + j]}</div>);
     }
     parsedBoard.push(parsedRow);
@@ -189,7 +190,7 @@ export default function TTT() {
             />
             :
             <>
-              <h2>Next up is {game.next}</h2>
+              <h2>Next up is {game.piece}</h2>
               <div className={classes.board}>
                 <Board game={game}
                   handleClick={handleClick}

@@ -13,6 +13,7 @@ const StartChoose = (props) => {
       <Button onClick={() => handleClick('O')}>
         O
       </Button>
+      <h4>Select a Symbol</h4>
     </div>
   );
 };
