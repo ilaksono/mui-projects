@@ -35,6 +35,10 @@ import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import Wiki from 'views/Wiki';
+import GoogleImages from 'views/GoogleImages';
+import TTT from 'views/TTT';
+
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -69,19 +73,19 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
+    path: "/images",
+    name: "Images",
+    rtlName: "",
     icon: BubbleChart,
-    component: Icons,
+    component: GoogleImages,
     layout: "/admin"
   },
   {
-    path: "/maps",
-    name: "Maps",
-    rtlName: "خرائط",
+    path: "/ttt",
+    name: "TicTacToe",
+    rtlName: '',
     icon: LocationOn,
-    component: Maps,
+    component: TTT,
     layout: "/admin"
   },
   {

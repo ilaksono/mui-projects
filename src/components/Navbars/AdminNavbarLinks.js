@@ -122,7 +122,7 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      Mike John responded to your email
+                      Example Notification
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
@@ -134,7 +134,7 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseNotification}
                       className={classes.dropdownItem}
                     >
-                      You{"'"}re now friend with Andrew
+                      You{"'"}re now friends with Andrew
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseNotification}
