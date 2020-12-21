@@ -52,17 +52,17 @@ const styles = {
   }
 };
 const useStyles = makeStyles(styles);
-const song = new Audio('/inferno.mp3')
+const song = new Audio('/inferno.mp3');
 
 const PlayerPage = () => {
   const [repeat, setRepeat] = useState(true);
   const { togglePlay, play, setPlay
- } = useContext(AppContext);
+  } = useContext(AppContext);
   // const [audio, setAudio] = useState(new Audio('/inferno.mp3'));
   // const audio = new Audio('/inferno.mp3');
   const audio = useRef(song);
   audio.current.onended = function () {
-    if (repeat) 
+    if (repeat)
       audio.current.play();
     else togglePlay();
   };
@@ -90,7 +90,7 @@ const PlayerPage = () => {
           setPlay(false);
         }
       }
-    }
+    };
     window.addEventListener('keydown', A);
     return () => window.removeEventListener('keydown', A);
   }, [play]);
@@ -101,16 +101,25 @@ const PlayerPage = () => {
           <h4 className={classes.cardTitleWhite}>An Audio Player</h4>
           <p className={classes.cardCategoryWhite}>Wear headphones</p>
         </CardHeader>
-        <CardBody>
-          <Button color={play ? "primary" : 'default'} onClick={handlePlay}><i class="fas fa-play"></i></Button>
-          <Button color={!play ? "primary" : 'default'} onClick={handlePause}><i class="fas fa-pause"></i></Button>
-          <Button color={repeat ? 'primary' : 'default'}
-            onClick={() => setRepeat(prev => !prev)}>
-            <i class="fas fa-redo-alt"></i>
-          </Button>
+        <CardBody style={{ display: 'flex', flexDirection: 'column', justifyContent:'flex-start', alignItems:'center'}}>
+          <div style={{width:200, boxShadow:'0 0 2px 2px grey', borderRadius:'5px'}}>
+            <marquee>Inferno - Lo-fi </marquee>
+          </div>
+          <div style={{margin:'35px'}}>
+            <Button color={play ? "primary" : 'default'} onClick={handlePlay}><i class="fas fa-play"></i></Button>
+            <Button color={!play ? "primary" : 'default'} onClick={handlePause}><i class="fas fa-pause"></i></Button>
+            <Button color={repeat ? 'primary' : 'default'}
+              onClick={() => setRepeat(prev => !prev)}>
+              <i class="fas fa-redo-alt"></i>
+            </Button>
+
+          </div>
           <Volume audio={audio.current} />
-          <SongDuration audio={audio.current}/>
+          <SongDuration audio={audio.current} />
         </CardBody>
+        {
+          // play && <img src='/tru.gif' alt='' style={{width: 100, height: 100, borderRadius: '50%'}}/>
+        }
       </Card>
 
 

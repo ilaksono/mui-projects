@@ -16,7 +16,6 @@ const formatTime = (num) => {
   const m = Math.floor(num / 60);
   num -= m * 60;
   const s = Math.floor(num);
-  console.log(m, s);
   return `${m}:${s < 10 ? '0' : ''}${s}`;
 };
 
