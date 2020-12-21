@@ -14,7 +14,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AppContext from 'AppContext';
 import Volume from 'components/Volume';
-
+import SongDuration from 'components/SongDuration';
 const styles = {
   typo: {
     paddingLeft: "25%",
@@ -55,7 +55,7 @@ const useStyles = makeStyles(styles);
 const song = new Audio('/inferno.mp3')
 
 const PlayerPage = () => {
-  const [repeat, setRepeat] = useState(false);
+  const [repeat, setRepeat] = useState(true);
   const { togglePlay, play, setPlay
  } = useContext(AppContext);
   // const [audio, setAudio] = useState(new Audio('/inferno.mp3'));
@@ -80,7 +80,7 @@ const PlayerPage = () => {
     const A = (e) => {
       if (e.key === " ") {
         e.preventDefault();
-        console.log('pressed', play);
+        console.log('pressed', audio.current.duration, audio.current.currentTime);
         if (!play) {
           audio.current.play();
           setPlay(true);
@@ -109,7 +109,7 @@ const PlayerPage = () => {
             <i class="fas fa-redo-alt"></i>
           </Button>
           <Volume audio={audio.current} />
-
+          <SongDuration audio={audio.current}/>
         </CardBody>
       </Card>
 
