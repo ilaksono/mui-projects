@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 
 import Quote from "components/Typography/Quote.js";
@@ -52,27 +52,48 @@ const styles = {
   }
 };
 const useStyles = makeStyles(styles);
+const song = new Audio('/inferno.mp3')
 
 const PlayerPage = () => {
   const [repeat, setRepeat] = useState(false);
-  const { togglePlay, play } = useContext(AppContext);
-  const [audio, setAudio] = useState(new Audio('/inferno.mp3'));
+  const { togglePlay, play, setPlay
+ } = useContext(AppContext);
+  // const [audio, setAudio] = useState(new Audio('/inferno.mp3'));
   // const audio = new Audio('/inferno.mp3');
-  audio.onended = function () {
-    if (repeat)
-      audio.play();
+  const audio = useRef(song);
+  audio.current.onended = function () {
+    if (repeat) 
+      audio.current.play();
+    else togglePlay();
   };
   const classes = useStyles();
 
-
   const handlePlay = () => {
-    audio.play();
-    togglePlay();
+    audio.current.play();
+    setPlay(true);
   };
   const handlePause = () => {
-    audio.pause();
-    togglePlay();
+    audio.current.pause();
+    setPlay(false);
   };
+  useEffect(() => {
+    const A = (e) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        console.log('pressed', play);
+        if (!play) {
+          audio.current.play();
+          setPlay(true);
+        }
+        else {
+          audio.current.pause();
+          setPlay(false);
+        }
+      }
+    }
+    window.addEventListener('keydown', A);
+    return () => window.removeEventListener('keydown', A);
+  }, [play]);
   return (
     <div>
       <Card>
@@ -81,13 +102,13 @@ const PlayerPage = () => {
           <p className={classes.cardCategoryWhite}>Wear headphones</p>
         </CardHeader>
         <CardBody>
-          <Button color={play ? "primary": 'default'} onClick={handlePlay}><i class="fas fa-play"></i></Button>
+          <Button color={play ? "primary" : 'default'} onClick={handlePlay}><i class="fas fa-play"></i></Button>
           <Button color={!play ? "primary" : 'default'} onClick={handlePause}><i class="fas fa-pause"></i></Button>
           <Button color={repeat ? 'primary' : 'default'}
             onClick={() => setRepeat(prev => !prev)}>
             <i class="fas fa-redo-alt"></i>
           </Button>
-        <Volume audio={audio} setAudio={setAudio}/>
+          <Volume audio={audio.current} />
 
         </CardBody>
       </Card>

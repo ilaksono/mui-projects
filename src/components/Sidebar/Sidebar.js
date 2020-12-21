@@ -58,7 +58,6 @@ export default function Sidebar(props) {
                   className={classNames(classes.itemIcon, 
                     whiteFontClasses, {
                     [classes.itemIconRTL]: props.rtlActive,
-                    "glow": (play && prop.path === '/player')
                   })}
                 >
                   {prop.icon}
@@ -73,7 +72,8 @@ export default function Sidebar(props) {
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
-                  [classes.itemTextRTL]: props.rtlActive
+                  [classes.itemTextRTL]: props.rtlActive,
+                  "glow": (play && prop.path === '/player')
                 })}
                 
                 disableTypography={true}

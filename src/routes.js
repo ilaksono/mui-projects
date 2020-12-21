@@ -40,7 +40,7 @@ import GoogleImages from 'views/GoogleImages';
 import TTT from 'views/TTT';
 import PlayerPage from 'views/PlayerPage';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-
+import GamepadIcon from '@material-ui/icons/Gamepad';
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -86,7 +86,7 @@ const dashboardRoutes = [
     path: "/ttt",
     name: "TicTacToe",
     rtlName: '',
-    icon: LocationOn,
+    icon: GamepadIcon,
     component: TTT,
     layout: "/admin"
   },

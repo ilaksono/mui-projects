@@ -6,7 +6,8 @@ const usePlayer = () => {
   };
   return {
     play,
-    togglePlay
+    togglePlay,
+    setPlay
   };
 
 };

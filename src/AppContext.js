@@ -3,11 +3,15 @@ import usePlayer from 'hooks/usePlayer';
 const AppContext = React.createContext();
 
 export const AppProvider = ({ children }) => {
-  const { play, togglePlay } = usePlayer();
+  const { play,
+    togglePlay,
+    setPlay
+  } = usePlayer();
   return (
     <AppContext.Provider value={{
       play,
-      togglePlay
+      togglePlay,
+      setPlay
     }}>
       {children}
     </AppContext.Provider>
