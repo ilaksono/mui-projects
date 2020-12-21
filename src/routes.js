@@ -25,6 +25,7 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
+import React from 'react';
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
@@ -37,7 +38,8 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import Wiki from 'views/Wiki';
 import GoogleImages from 'views/GoogleImages';
 import TTT from 'views/TTT';
-
+import PlayerPage from 'views/PlayerPage';
+import VolumeUp from '@material-ui/icons/VolumeUp';
 
 const dashboardRoutes = [
   {
@@ -105,10 +107,10 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/upgrade-to-pro",
-    name: "h",
-    icon: Unarchive,
-    component: UpgradeToPro,
+    path: "/player",
+    name: "Music Player",
+    icon:  VolumeUp,
+    component: PlayerPage,
     layout: "/admin"
   }
 ];

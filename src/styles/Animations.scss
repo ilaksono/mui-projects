@@ -40,3 +40,38 @@
 .animate {
   animation: side-side 5s infinite;
 }
+
+
+@keyframes glow {
+  from {
+    color: #88b853;
+  }
+  12% {
+    color: #53b869;
+  }
+  25% {
+    color: #15def8
+  }
+  37% {
+    color: rgb(0, 47, 255);
+  }
+  50% {
+    color: rgb(0, 9, 128);
+  }
+  62% {
+    color: rgb(128, 0, 128);
+  }
+  75% {
+    color: rgb(128, 0, 0);
+  }
+  88% {
+    color: rgb(255, 187, 0);
+  }
+  to {
+    color:  #3cff00;
+  }
+}
+
+.glow {
+  animation: glow 7s infinite;
+}
