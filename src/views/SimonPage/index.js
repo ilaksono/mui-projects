@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -58,6 +58,9 @@ const initGame = {
   wrong: false,
   msg: ''
 };
+const sleep = () => {
+  return new Promise((res, rej) => setTimeout(res, 1000));
+};
 
 const mp3 = [
   'https://s3.amazonaws.com/freecodecamp/simonSound1.mp3',
@@ -70,122 +73,187 @@ export default function SimonPage() {
   const [seq, setSeq] = useState([]);
   const [game, setGame] = useState(initGame);
   const [current, setCurrent] = useState(-1);
+  const [turn, setTurn] = useState(0);
+  const [st, setSt] = useState(true);
   const generateMove = () => {
     const a = Math.floor(Math.random() * 4);
-    setSeq([...seq, a]);
+    setSeq(prev => [...prev, a]);
   };
 
   const gameStart = () => {
     setGame(initGame);
     setSeq([]);
+    generateMove();
+    setTurn(0);
   };
 
-  const playSequence = () => {
-    seq.forEach( (s) => {
+  const playSequence = async () => {
+    for (const s of seq) {
       const aud = new Audio(mp3[s]);
       setCurrent(s);
       aud.play();
-    });
+      await sleep();
+    }
+
     setGame({ ...game, turn: true, wrong: false });
+    setCurrent(-1);
   };
   const playOne = async (i) => {
     const aud = new Audio(mp3[i]);
     await aud.play();
 
-  }
+  };
+
+  const keyUp = e => {
+    console.log('keyup');
+    setCurrent(-1);
+  };
+
   useEffect(() => {
-    if (game.turn > seq.length) {
-      setGame({ ...game, turn: 0 });
-      generateMove();
+    if (turn >= seq.length && seq.length > 0) {
+      setTimeout(() => {
+        setTurn(0);
+        generateMove();
+      }, 1500);
     }
-    if (game.wrong) {
-      setGame({...game, msg:'You got it wrong!'});
+    else if (game.wrong) {
+      setGame({ ...game, wrong: false, msg: 'You got it wrong!' });
     }
-  }, []);
+  }, [turn]);
   useEffect(() => {
     playSequence();
   }, [seq]);
 
   const A = (e) => {
+    console.log(e.key);
     if (game.turn) {
-      if (e.key === 'w' && seq[game.turn] === 0)
-        setGame({ ...game, turn: game.turn + 1 });
-      else if (e.key === 'a' && seq[game.turn] === 1)
-        setGame({ ...game, turn: game.turn + 1 });
-      else if (e.key === 's' && seq[game.turn] === 2)
-        setGame({ ...game, turn: game.turn + 1 });
-      else if (e.key === 'd' && seq[game.turn] === 3)
-        setGame({ ...game, turn: game.turn + 1 });
-      else setGame({ ...game, wrong: true });
+      if (e.key == 'w' && seq[turn] === 0) {
+        setTurn(prev => prev + 1);
+        setCurrent(0);
+        const aud = new Audio(mp3[0]);
+        aud.play();
+      }
+      else if (e.key == 'a' && seq[turn] === 1) {
+        setTurn(prev => prev + 1);
+        setCurrent(1);
+        const aud = new Audio(mp3[1]);
+        aud.play();
+
+      }
+      else if (e.key == 's' && seq[turn] === 2) {
+        setTurn(prev => prev + 1);
+        setCurrent(2);
+        const aud = new Audio(mp3[2]);
+        aud.play();
+
+      } else if (e.key == 'd' && seq[turn] === 3) {
+        setTurn(prev => prev + 1);
+        setCurrent(3);
+        const aud = new Audio(mp3[3]);
+        aud.play();
+
+      } else {
+        setGame({ ...game, wrong: true });
+        setTurn(0);
+      }
     }
   };
+  const mouseUp = (e) => {
+    setCurrent(-1);
+  };
   useEffect(() => {
-    window.addEventListener('keydown', e => A(e));
-
-    return () => 
-    window.removeEventListener('keydown', A);
-
-  }, []);
+    window.addEventListener('keydown', A);
+    window.addEventListener('keyup', keyUp);
+    window.addEventListener('mouseup', mouseUp);
+    return () => {
+      window.removeEventListener('keydown', A);
+      window.removeEventListener('keyup', keyUp);
+      window.removeEventListener('mouseup', mouseUp);
+    };
+  }, [A]);
   return (
     <Card>
       <CardHeader color="primary">
         <h4 className={classes.cardTitleWhite}>Simon Says</h4>
         <p className={classes.cardCategoryWhite}></p>
       </CardHeader>
-      <CardBody>
-        <div>
-          <Button 
-          color={current === 0 ? 'primary': 'default'}
-          variant={current === 0 ? 'contained' : 'outlined'}
-          onClick={() => {
-            const can = {key: 'w'}
-            A(can)
+      <CardBody style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+          <Button
+            color={current === 0 ? 'primary' : 'default'}
+            variant={current === 0 ? 'contained' : 'outlined'}
+            onMouseDown={() => {
+              const can = { key: 'w' };
+              setCurrent(0);
+
+              A(can);
             }}>
-            <i class="fas fa-arrow-up"></i>
+            W
           </Button>
           <div>
             <Button
               color={current === 1 ? 'primary' : 'default'}
               variant={current === 1 ? 'contained' : 'outlined'}
 
-              onClick={() => {
+              onMouseDown={() => {
                 const can = { key: 'a' };
+                setCurrent(1);
                 A(can);
               }}
             >
-              <i class="fas fa-arrow-left"></i>
+              A
             </Button>
+            <Button
+              color={current === 2 ? 'primary' : 'default'}
+              variant={current === 2 ? 'contained' : 'outlined'}
+
+              onMouseDown={() => {
+                const can = { key: 's' };
+                setCurrent(2);
+
+                A(can);
+              }}
+            >
+              S
+          </Button>
             <Button
               color={current === 3 ? 'primary' : 'default'}
               variant={current === 3 ? 'contained' : 'outlined'}
 
-              onClick={() => {
+              onMouseDown={() => {
                 const can = { key: 'd' };
+                setCurrent(3);
+
                 A(can);
               }}
             >
-              <i class="fas fa-arrow-right"></i>
+              D
             </Button>
-          </div>
-          <Button
-            color={current === 2 ? 'primary' : 'default'}
-            variant={current === 2 ? 'contained' : 'outlined'}
 
-            onClick={() => {
-              const can = { key: 's' };
-              A(can);
-            }}
-          >
-            <i class="fas fa-arrow-down"></i>
-          </Button>
-        </div>
-        <Button onClick={gameStart}>Start</Button>
-        <Button onClick={gameStart}>Reset</Button>
-        {
-          game.msg && <div>
-            {game.msg}
           </div>
-        }
+          <div>
+            {seq.length < 1 &&
+              <Button onClick={gameStart}>Start</Button>
+            }
+            <Button onClick={gameStart}>Reset</Button>
+          </div>
+          {
+            game.msg &&
+            <div>
+              {game.msg}
+            </div>
+          }
+        </div>
+        <div>
+          <table>
+            <tr style={{ fontSize: '18px' }}>
+              <td ><strong>Score: </strong></td>
+              <td>{Math.max(seq.length - 1, 0)}</td>
+            </tr>
+
+          </table>
+        </div>
       </CardBody>
     </Card>
   );
