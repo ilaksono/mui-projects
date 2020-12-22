@@ -95,7 +95,7 @@ export default function SimonPage() {
       await sleep();
     }
 
-    setGame({ ...game, turn: true, wrong: false });
+    setGame({ ...game, turn: true, wrong: false, msg: 'Your Turn' });
     setCurrent(-1);
   };
   const playOne = async (i) => {
@@ -111,6 +111,7 @@ export default function SimonPage() {
 
   useEffect(() => {
     if (turn >= seq.length && seq.length > 0) {
+      setGame({ ...game, msg: '' });
       setTimeout(() => {
         setTurn(0);
         generateMove();
