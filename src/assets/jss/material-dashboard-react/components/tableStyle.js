@@ -70,8 +70,12 @@ const tableStyle = theme => ({
     color: "inherit",
     display: "table-row",
     outline: "none",
-    verticalAlign: "middle"
-  }
+    verticalAlign: "middle",
+    "&:hover": {
+      backgroundColor: "#EEEEEE",
+      boxShadow: "0 0 2px 2px grey"
+    }
+  },
 });
 
 export default tableStyle;

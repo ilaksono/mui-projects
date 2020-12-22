@@ -41,6 +41,8 @@ import TTT from 'views/TTT';
 import PlayerPage from 'views/PlayerPage';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import GamepadIcon from '@material-ui/icons/Gamepad';
+import SimonPage from 'views/SimonPage';
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -112,7 +114,15 @@ const dashboardRoutes = [
     icon:  VolumeUp,
     component: PlayerPage,
     layout: "/admin"
-  }
+  },
+  {
+    path: "/simon",
+    name: "Simon Game",
+    rtlName: '',
+    icon: GamepadIcon,
+    component: SimonPage,
+    layout: "/admin"
+  },
 ];
 
 export default dashboardRoutes;
